@@ -1,4 +1,4 @@
-package com.prashant.bank.dto;
+package com.prashant.bank.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

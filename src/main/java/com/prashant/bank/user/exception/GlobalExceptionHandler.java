@@ -1,4 +1,4 @@
-package com.prashant.bank.exception;
+package com.prashant.bank.user.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

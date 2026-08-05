@@ -1,4 +1,4 @@
-package com.prashant.bank.dto;
+package com.prashant.bank.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

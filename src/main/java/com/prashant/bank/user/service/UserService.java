@@ -1,10 +1,10 @@
-package com.prashant.bank.service;
+package com.prashant.bank.user.service;
 
-import com.prashant.bank.dto.UserRequestDto;
-import com.prashant.bank.dto.UserResponseDto;
-import com.prashant.bank.entity.User;
-import com.prashant.bank.exception.UserNotFoundException;
-import com.prashant.bank.repository.UserRepository;
+import com.prashant.bank.user.dto.UserRequestDto;
+import com.prashant.bank.user.dto.UserResponseDto;
+import com.prashant.bank.user.entity.User;
+import com.prashant.bank.user.exception.UserNotFoundException;
+import com.prashant.bank.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

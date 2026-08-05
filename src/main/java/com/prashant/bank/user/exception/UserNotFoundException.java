@@ -1,4 +1,4 @@
-package com.prashant.bank.exception;
+package com.prashant.bank.user.exception;
 
 public class UserNotFoundException extends RuntimeException {
 
