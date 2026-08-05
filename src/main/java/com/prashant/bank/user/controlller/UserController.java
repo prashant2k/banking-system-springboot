@@ -1,8 +1,8 @@
-package com.prashant.bank.controller;
+package com.prashant.bank.user.controlller;
 
-import com.prashant.bank.dto.UserRequestDto;
-import com.prashant.bank.dto.UserResponseDto;
-import com.prashant.bank.service.UserService;
+import com.prashant.bank.user.dto.UserRequestDto;
+import com.prashant.bank.user.dto.UserResponseDto;
+import com.prashant.bank.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

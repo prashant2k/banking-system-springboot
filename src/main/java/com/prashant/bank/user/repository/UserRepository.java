@@ -1,6 +1,6 @@
-package com.prashant.bank.repository;
+package com.prashant.bank.user.repository;
 
-import com.prashant.bank.entity.User;
+import com.prashant.bank.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.prashant.bank.entity;
+package com.prashant.bank.user.entity;
 
 
 import jakarta.persistence.*;
