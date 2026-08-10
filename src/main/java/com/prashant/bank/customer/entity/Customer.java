@@ -35,9 +35,21 @@ public class Customer {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
+    @Column(nullable = false)
+    private LocalDateTime updatedDate;
+
+    @Column(nullable = false)
+    private Boolean active = true;
+
     @PrePersist
     public void prePersist() {
-        this.createdDate = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
+        this.createdDate = now;
+        this.updatedDate = now;
     }
 
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedDate = LocalDateTime.now();
+    }
 }
