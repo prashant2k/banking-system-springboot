@@ -12,10 +12,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CustomerResponseDto {
+
     private Long customerId;
     private String name;
     private String email;
     private String mobile;
     private String address;
     private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
+    private Boolean active;
 }
