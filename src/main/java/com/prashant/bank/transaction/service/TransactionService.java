@@ -8,9 +8,11 @@ import com.prashant.bank.transaction.dto.TransactionResponseDto;
 import com.prashant.bank.transaction.entity.Transaction;
 import com.prashant.bank.transaction.entity.TransactionStatus;
 import com.prashant.bank.transaction.entity.TransactionType;
+import com.prashant.bank.transaction.event.TransactionEvent;
 import com.prashant.bank.transaction.exception.InsufficientBalanceException;
 import com.prashant.bank.transaction.exception.InvalidTransactionException;
 import com.prashant.bank.transaction.exception.TransactionNotFoundException;
+import com.prashant.bank.transaction.kafka.TransactionEventProducer;
 import com.prashant.bank.transaction.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
+    private final TransactionEventProducer transactionEventProducer;
 
     /**
      * Process deposit, withdrawal, or transfer.
@@ -70,9 +73,22 @@ public class TransactionService {
                 TransactionType.DEPOSIT
         );
 
-        return mapToResponse(
-                transactionRepository.save(transaction)
+        Transaction savedTransaction =
+                transactionRepository.save(transaction);
+
+        transactionEventProducer.publishTransactionEvent(
+                new TransactionEvent(
+                        savedTransaction.getTransactionId(),
+                        savedTransaction.getAccountId(),
+                        savedTransaction.getRelatedAccountId(),
+                        savedTransaction.getTransactionType().name(),
+                        savedTransaction.getAmount(),
+                        savedTransaction.getStatus().name(),
+                        savedTransaction.getCreatedDate()
+                )
         );
+
+        return mapToResponse(savedTransaction);
     }
 
     /**
@@ -101,9 +117,22 @@ public class TransactionService {
                 TransactionType.WITHDRAWAL
         );
 
-        return mapToResponse(
-                transactionRepository.save(transaction)
+        Transaction savedTransaction =
+                transactionRepository.save(transaction);
+
+        transactionEventProducer.publishTransactionEvent(
+                new TransactionEvent(
+                        savedTransaction.getTransactionId(),
+                        savedTransaction.getAccountId(),
+                        savedTransaction.getRelatedAccountId(),
+                        savedTransaction.getTransactionType().name(),
+                        savedTransaction.getAmount(),
+                        savedTransaction.getStatus().name(),
+                        savedTransaction.getCreatedDate()
+                )
         );
+
+        return mapToResponse(savedTransaction);
     }
 
     /**
@@ -166,9 +195,22 @@ public class TransactionService {
                 TransactionType.TRANSFER
         );
 
-        return mapToResponse(
-                transactionRepository.save(transaction)
+        Transaction savedTransaction =
+                transactionRepository.save(transaction);
+
+        transactionEventProducer.publishTransactionEvent(
+                new TransactionEvent(
+                        savedTransaction.getTransactionId(),
+                        savedTransaction.getAccountId(),
+                        savedTransaction.getRelatedAccountId(),
+                        savedTransaction.getTransactionType().name(),
+                        savedTransaction.getAmount(),
+                        savedTransaction.getStatus().name(),
+                        savedTransaction.getCreatedDate()
+                )
         );
+
+        return mapToResponse(savedTransaction);
     }
 
     /**
