@@ -4,11 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prashant.bank.customer.dto.CustomerRequestDto;
 import com.prashant.bank.customer.dto.CustomerResponseDto;
 import com.prashant.bank.customer.service.CustomerService;
+import com.prashant.bank.security.filter.JwtAuthenticationFilter;
+import com.prashant.bank.security.service.CustomUserDetailsService;
+import com.prashant.bank.security.service.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,7 +31,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CustomerController.class)
+@WebMvcTest(
+        controllers = CustomerController.class,
+        excludeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.ASSIGNABLE_TYPE,
+                        classes = JwtAuthenticationFilter.class
+                )
+        }
+)
 @AutoConfigureMockMvc(addFilters = false)
 class CustomerControllerTest {
 
@@ -39,6 +52,11 @@ class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
 
     // =========================================================
     // CREATE CUSTOMER
@@ -75,21 +93,15 @@ class CustomerControllerTest {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.customerId").value(1))
-                .andExpect(jsonPath("$.name")
-                        .value("Prashant Mishra"))
-                .andExpect(jsonPath("$.email")
-                        .value("prashant@test.com"))
-                .andExpect(jsonPath("$.mobile")
-                        .value("9876543210"))
-                .andExpect(jsonPath("$.address")
-                        .value("Noida"))
-                .andExpect(jsonPath("$.active")
-                        .value(true));
+                .andExpect(jsonPath("$.name").value("Prashant Mishra"))
+                .andExpect(jsonPath("$.email").value("prashant@test.com"))
+                .andExpect(jsonPath("$.mobile").value("9876543210"))
+                .andExpect(jsonPath("$.address").value("Noida"))
+                .andExpect(jsonPath("$.active").value(true));
 
         verify(customerService)
                 .createCustomer(any(CustomerRequestDto.class));
     }
-
 
     // =========================================================
     // GET ALL CUSTOMERS
@@ -116,23 +128,16 @@ class CustomerControllerTest {
                         get("/api/v1/customers")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].customerId")
-                        .value(1))
-                .andExpect(jsonPath("$[0].name")
-                        .value("Prashant Mishra"))
-                .andExpect(jsonPath("$[0].email")
-                        .value("prashant@test.com"))
-                .andExpect(jsonPath("$[0].mobile")
-                        .value("9876543210"))
-                .andExpect(jsonPath("$[0].address")
-                        .value("Noida"))
-                .andExpect(jsonPath("$[0].active")
-                        .value(true));
+                .andExpect(jsonPath("$[0].customerId").value(1))
+                .andExpect(jsonPath("$[0].name").value("Prashant Mishra"))
+                .andExpect(jsonPath("$[0].email").value("prashant@test.com"))
+                .andExpect(jsonPath("$[0].mobile").value("9876543210"))
+                .andExpect(jsonPath("$[0].address").value("Noida"))
+                .andExpect(jsonPath("$[0].active").value(true));
 
         verify(customerService)
                 .getAllCustomers();
     }
-
 
     // =========================================================
     // GET CUSTOMER BY ID
@@ -159,21 +164,15 @@ class CustomerControllerTest {
                         get("/api/v1/customers/1")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId")
-                        .value(1))
-                .andExpect(jsonPath("$.name")
-                        .value("Prashant Mishra"))
-                .andExpect(jsonPath("$.email")
-                        .value("prashant@test.com"))
-                .andExpect(jsonPath("$.mobile")
-                        .value("9876543210"))
-                .andExpect(jsonPath("$.active")
-                        .value(true));
+                .andExpect(jsonPath("$.customerId").value(1))
+                .andExpect(jsonPath("$.name").value("Prashant Mishra"))
+                .andExpect(jsonPath("$.email").value("prashant@test.com"))
+                .andExpect(jsonPath("$.mobile").value("9876543210"))
+                .andExpect(jsonPath("$.active").value(true));
 
         verify(customerService)
                 .getCustomerById(1L);
     }
-
 
     // =========================================================
     // UPDATE CUSTOMER
@@ -211,16 +210,11 @@ class CustomerControllerTest {
                                 .content(objectMapper.writeValueAsString(request))
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerId")
-                        .value(1))
-                .andExpect(jsonPath("$.name")
-                        .value("Updated Customer"))
-                .andExpect(jsonPath("$.email")
-                        .value("updated@test.com"))
-                .andExpect(jsonPath("$.mobile")
-                        .value("9876543210"))
-                .andExpect(jsonPath("$.active")
-                        .value(true));
+                .andExpect(jsonPath("$.customerId").value(1))
+                .andExpect(jsonPath("$.name").value("Updated Customer"))
+                .andExpect(jsonPath("$.email").value("updated@test.com"))
+                .andExpect(jsonPath("$.mobile").value("9876543210"))
+                .andExpect(jsonPath("$.active").value(true));
 
         verify(customerService)
                 .updateCustomer(
@@ -228,7 +222,6 @@ class CustomerControllerTest {
                         any(CustomerRequestDto.class)
                 );
     }
-
 
     // =========================================================
     // DELETE CUSTOMER
