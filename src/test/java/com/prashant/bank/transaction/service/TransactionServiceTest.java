@@ -11,6 +11,7 @@ import com.prashant.bank.transaction.entity.TransactionType;
 import com.prashant.bank.transaction.exception.InsufficientBalanceException;
 import com.prashant.bank.transaction.exception.InvalidTransactionException;
 import com.prashant.bank.transaction.repository.TransactionRepository;
+import com.prashant.bank.transaction.kafka.TransactionEventProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,9 @@ class TransactionServiceTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private TransactionEventProducer transactionEventProducer;
 
     @InjectMocks
     private TransactionService transactionService;
