@@ -1,96 +1,55 @@
 # Banking System - Spring Boot
 
-A production-style Spring Boot Banking System built to demonstrate enterprise backend development using Java and Spring Boot.
-
-## Features
-
-- RESTful APIs
-- CRUD Operations
-- DTO Pattern
-- Validation
-- Global Exception Handling
-- Custom Exception
-- Spring Data JPA
-- H2 Database
-- Swagger OpenAPI
-- Logging (SLF4J)
+Production-style banking backend built using Java 17 and Spring Boot.
 
 ## Tech Stack
 
-- Java 17
-- Spring Boot 3.5.4
-- Spring Data JPA
-- Spring Validation
-- Spring Security
-- H2 Database
-- Maven
-- Swagger/OpenAPI
-- Git & GitHub
+Java 17 | Spring Boot | Spring Security | JWT | JPA | H2 | Kafka | Docker | Swagger | JUnit
 
-## Project Structure
+## Features
 
-```
-src
- └── main
-     ├── controller
-     ├── service
-     ├── repository
-     ├── entity
-     ├── dto
-     ├── exception
-     └── config
-```
-
-## How to Run
-
-1. Clone the repository
-
-```bash
-git clone https://github.com/prashant2k/banking-system-springboot.git
-```
-
-2. Open in IntelliJ IDEA
-
-3. Run:
-
-```
-BankSystemApplication.java
-```
-
-4. Swagger UI
-
-```
-http://localhost:8080/swagger-ui/index.html
-```
-
-5. H2 Console
-
-```
-http://localhost:8080/h2-console
-```
-
-## Current Features
-
-- User CRUD APIs
-- Input Validation
-- Global Exception Handling
-- Swagger Documentation
-- Logging
-
-## Planned Features
-
-- Customer Management
+- Customer & User Management
 - Account Management
-- Deposit & Withdraw
-- Fund Transfer
-- JWT Authentication
-- Kafka Integration
-- Docker
-- JUnit & Mockito
-- MySQL
-- Kubernetes
-- AWS Deployment
+- Banking Transactions
+- JWT Authentication & Authorization
+- Kafka Producer/Consumer
+- Validation & Exception Handling
+- Swagger/OpenAPI
+- Docker Containerization
+- Unit Testing
+
+## Architecture
+
+Client → REST API → Controller → Service → Repository → Database
+↓
+Kafka
+
+## Run Locally
+
+
+mvn clean package
+
+mvn test
+
+mvn spring-boot:run   
+
+Application: http://localhost:8080  
+
+Swagger
+http://localhost:8080/swagger-ui/index.html
+
+## Docker
+
+mvn clean package -DskipTests
+
+docker build -t banking-system:1.0 .
+
+ocker run -d --name banking-system-container -p 8080:8080 banking-system:1.0
+
+## Git Workflow
+
+Feature Branch → Test → Commit → Push → Pull Request → Merge
 
 ## Author
 
-**Prashant Mishra**
+Prashant Mishra
