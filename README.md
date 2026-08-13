@@ -21,17 +21,29 @@ Java 17 | Spring Boot | Spring Security | JWT | JPA | H2 | Kafka | Docker | Swag
 ## Architecture
 
 Client
+
   ↓
+  
 REST API
+
   ↓
+  
 Controller
+
   ↓
+  
 Service
+
   ↓
+  
 Repository
+
   ↓
+  
 Database
+
   │
+  
   └── Transaction Event → Kafka → Consumer
 
 ## Run Locally
